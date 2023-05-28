@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.Optional;
 
@@ -84,4 +85,23 @@ public class HelloController {
     repository.saveAndFlush(Person);
     return new ModelAndView("redirect:/");
   }
+
+  @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+  public ModelAndView delete(@PathVariable int id,
+                              ModelAndView mav){
+    mav.setViewName("delete");
+    mav.addObject("title", "Delete Person");
+    mav.addObject("msg", "Can I delete this record?");
+    Optional<Person> data = repository.findById((long)id);
+    mav.addObject("formModel", data.get());
+    return mav;
+  }
+
+  @RequestMapping(value = "/delete", method = RequestMethod.POST)
+  @Transactional
+  public ModelAndView remove(@RequestParam long id,
+                             ModelAndView mav){
+    repository.deleteById(id);
+    return new ModelAndView("redirect:/");
+   }
 }
