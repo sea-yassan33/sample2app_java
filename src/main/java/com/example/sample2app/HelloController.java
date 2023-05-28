@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
-
+import java.util.Optional;
 
 import com.example.sample2app.repositories.PersonRepository;
 
@@ -64,5 +65,23 @@ public class HelloController {
     p3.setAge(22);
     p3.setMail("sachico@tech.com");
     repository.saveAndFlush(p3);
+  }
+
+  @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+  public ModelAndView edit(@ModelAttribute Person Person,
+                           @PathVariable int id, ModelAndView mav){
+    mav.setViewName("edit");
+    mav.addObject("title", "edit Person");
+    Optional<Person> data = repository.findById((long)id);
+    mav.addObject("formModel", data.get());
+    return mav;
+  }
+
+  @RequestMapping(value = "/edit", method = RequestMethod.POST)
+  @Transactional
+  public ModelAndView update(@ModelAttribute Person Person,
+                             ModelAndView mav){
+    repository.saveAndFlush(Person);
+    return new ModelAndView("redirect:/");
   }
 }
