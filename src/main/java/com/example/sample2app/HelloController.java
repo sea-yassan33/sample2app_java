@@ -12,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,10 +42,23 @@ public class HelloController {
   @RequestMapping(value = "/", method = RequestMethod.POST)
   @Transactional
   public ModelAndView form(
-          @ModelAttribute("formModel") Person Person,
+          @ModelAttribute("formModel") @Validated Person person,
+          BindingResult result,
           ModelAndView mav) {
-    repository.saveAndFlush(Person);
-    return new ModelAndView("redirect:/");
+    ModelAndView res = null;
+    System.out.println(result.getFieldErrors());
+    if (!result.hasErrors()){
+      repository.saveAndFlush(person);
+      res = new ModelAndView("redirect:/");
+    }else{
+      mav.setViewName("index");
+      mav.addObject("title","Hello page");
+      mav.addObject("msg","sorry, error is occurred...");
+      Iterable<Person> list = repository.findAll();
+      mav.addObject("datalist", list);
+      res = mav;
+    }
+    return res;
   }
 
   @PostConstruct
