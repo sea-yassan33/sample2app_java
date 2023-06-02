@@ -19,17 +19,17 @@ public class Person {
   private long id;
 
   @Column(length = 50, nullable = false)
-  @NotBlank(message = "名無しの権兵衛")
+  @NotBlank
   private String name;
 
   @Column(length = 200, nullable = true)
   @Email
-  @NotBlank(message = "メールがない")
+  @NotBlank
   private String mail;
 
   @Column(nullable = true)
-  @Min(value = 0, message = "マイナスってありえない")
-  @Max(value =200, message = "見直して！")
+  @Min(value = 0)
+  @Max(value =200)
   private Integer age;
 
   @Column(nullable = true)
