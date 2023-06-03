@@ -1,7 +1,7 @@
 package com.example.sample2app;
 
 import com.example.sample2app.repositories.PersonRepository;
-import jakarta.annotation.PostConstruct;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,13 +19,20 @@ import java.util.Optional;
 
 import com.example.sample2app.repositories.PersonRepository;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class HelloController {
 
   @Autowired
   PersonRepository repository;
+
+  @Autowired
+  PersonDAOPersonImpl dao;
 
   @RequestMapping("/")
   public ModelAndView index(
@@ -118,5 +125,15 @@ public class HelloController {
                              ModelAndView mav){
     repository.deleteById(id);
     return new ModelAndView("redirect:/");
-   }
+  }
+
+  @RequestMapping(value = "/find", method = RequestMethod.GET)
+  public ModelAndView index(ModelAndView mav){
+    mav.setViewName("find");
+    mav.addObject("msg", "Personのサンプルです");
+    Iterable<Person> list = dao.getAll();
+    mav.addObject("data", list);
+    return mav;
+  }
+
 }
