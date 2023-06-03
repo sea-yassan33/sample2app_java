@@ -33,7 +33,7 @@ public class Person {
   private Integer age;
 
   @Column(nullable = true)
-  @Phone
+  @Phone(onlyNumber = true)
   private String memo;
 
   public Long getId(){

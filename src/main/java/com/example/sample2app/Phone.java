@@ -16,7 +16,8 @@ import jakarta.validation.ReportAsSingleViolation;
 @Retention(RetentionPolicy.RUNTIME)
 @ReportAsSingleViolation
 public @interface Phone {
-  String message() default "電話番号を入れて下さい";
+  String message() default "電話番号を入れて下さい(-、()は不要)";
   Class<?>[] groups() default {};
   Class<? extends Payload>[] payload() default {};
+  boolean onlyNumber() default  false;
 }
