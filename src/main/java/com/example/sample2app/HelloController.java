@@ -147,8 +147,7 @@ public class HelloController {
       mav.addObject("title","Find result");
       mav.addObject("msg","「"+ param + "」の検索結果");
       mav.addObject("value", param);
-      Person data = dao.findById(Integer.parseInt(param));
-      Person[] list = new Person[] {data};
+      List<Person> list = dao.findByName(param);
       mav.addObject("data", list);
     }
     return  mav;
