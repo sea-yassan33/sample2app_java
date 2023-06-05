@@ -7,9 +7,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.*;
+import jakarta.persistence.NamedQuery;
 
 @Entity
 @Table(name="people")
+@NamedQuery(
+        name = "findWithName",
+        query = "from Person where name like :fname"
+)
 public class Person {
 
   @Id
@@ -70,4 +75,5 @@ public class Person {
   public void setMemo(String memo) {
     this.memo = memo;
   }
+
 }
