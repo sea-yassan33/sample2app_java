@@ -1,13 +1,8 @@
 package com.example.sample2app;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import jakarta.persistence.NamedQuery;
+import org.springframework.data.jpa.repository.Query;
 
 @Entity
 @Table(name="people")
@@ -15,6 +10,11 @@ import jakarta.persistence.NamedQuery;
         name = "findWithName",
         query = "from Person where name like :fname"
 )
+@NamedQuery(
+        name="findByAge",
+        query = "from Person where age >= :min and age < :max"
+)
+
 public class Person {
 
   @Id

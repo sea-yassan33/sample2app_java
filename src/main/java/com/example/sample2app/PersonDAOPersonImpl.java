@@ -49,4 +49,14 @@ public class PersonDAOPersonImpl implements PersonDAO<Person> {
     list = query.getResultList();
     return list;
   }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  public List<Person> findByAge(int min, int max){
+    return (List<Person>)entityManager
+            .createNamedQuery("findByAge")
+            .setParameter("min", min)
+            .setParameter("max", max)
+            .getResultList();
+  }
 }
