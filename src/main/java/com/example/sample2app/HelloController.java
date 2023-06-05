@@ -148,7 +148,7 @@ public class HelloController {
       mav.addObject("title","Find result");
       mav.addObject("msg","「"+ param + "」の検索結果");
       mav.addObject("value", param);
-      List<Person> list = dao.findByAge(
+      List<Person> list = repository.findByAge(
               Integer.parseInt(params[0]),
               Integer.parseInt(params[1]));
       mav.addObject("data", list);
