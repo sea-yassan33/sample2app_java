@@ -28,7 +28,7 @@ public class PersonDAOPersonImpl implements PersonDAO<Person> {
     CriteriaBuilder builder =entityManager.getCriteriaBuilder();
     CriteriaQuery<Person> query =builder.createQuery(Person.class);
     Root<Person> root = query.from(Person.class);
-    query.select(root);
+    query.select(root).orderBy(builder.asc(root.get("name")));
     list = (List<Person>)entityManager.createQuery(query).getResultList();
     return list;
   }
