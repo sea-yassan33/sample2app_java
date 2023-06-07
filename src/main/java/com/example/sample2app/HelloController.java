@@ -41,7 +41,7 @@ public class HelloController {
     mav.setViewName("index");
     mav.addObject("title", "Hello page");
     mav.addObject("msg","this is JPA sample data");
-    List<Person> list = repository.findAllOrderByName();
+    List<Person> list = dao.getAll();
     mav.addObject("data", list);
     return mav;
   }
