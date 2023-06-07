@@ -149,4 +149,14 @@ public class HelloController {
     }
     return  mav;
   }
+
+  @RequestMapping(value = "/page/{page}", method = RequestMethod.GET)
+  public ModelAndView index(ModelAndView mav, @PathVariable int page){
+    mav.setViewName("find");
+    mav.addObject("msg","Personのサンプル");
+    int num = 2; //取り出す個数
+    Iterable<Person> list = dao.getPage(page, num);
+    mav.addObject("data", list);
+    return mav;
+  }
 }

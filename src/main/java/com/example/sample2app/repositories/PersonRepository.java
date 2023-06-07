@@ -18,7 +18,6 @@ public interface PersonRepository
   List<Person> findAllOrderByName();
   @Query("from Person where age > :min and age < :max")
   public List<Person> findByAge(@Param("min") int min, @Param("max") int max);
-
   public Optional<Person> findById(Long name);
   public List<Person> findByNameLike(String name);
   public List<Person> findByIdIsNotNullOrderByIdDesc();

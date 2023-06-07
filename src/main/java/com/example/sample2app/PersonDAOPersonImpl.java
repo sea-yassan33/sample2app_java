@@ -65,4 +65,18 @@ public class PersonDAOPersonImpl implements PersonDAO<Person> {
             .setParameter("max", max)
             .getResultList();
   }
+
+  @Override
+  public List<Person> getPage(int page, int limit){
+    int offset = page - 1; //取り出す位置
+    CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+    CriteriaQuery<Person> query = builder.createQuery(Person.class);
+    Root<Person> root = query.from(Person.class);
+    query.select(root);
+    return (List<Person>) entityManager
+            .createQuery(query)
+            .setFirstResult(offset)
+            .setMaxResults(limit)
+            .getResultList();
+  }
 }
