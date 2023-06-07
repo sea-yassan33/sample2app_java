@@ -47,11 +47,12 @@ public class PersonDAOPersonImpl implements PersonDAO<Person> {
   @SuppressWarnings("unchecked")
   @Override
   public List<Person> find(String fstr){
+    CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+    CriteriaQuery<Person> query = builder.createQuery(Person.class);
+    Root<Person> root = query.from(Person.class);
+    query.select(root).where(builder.equal(root.get("name"), fstr));
     List<Person> list = null;
-    Query query = entityManager
-            .createNamedQuery("findWithName")
-            .setParameter("fname", "%" + fstr + "%");
-    list = query.getResultList();
+    list = (List<Person>) entityManager.createQuery(query).getResultList();
     return list;
   }
 
