@@ -1,5 +1,7 @@
 package com.example.sample2app;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.springframework.data.jpa.repository.Query;
@@ -16,6 +18,17 @@ import org.springframework.data.jpa.repository.Query;
 )
 
 public class Person {
+
+  @OneToMany(mappedBy = "Person")
+  @Column(nullable = true)
+  private List<Message> messages;
+
+  public List<Message> getMessages(){
+    return messages;
+  }
+  public void setMessages(List<Message> messages) {
+    this.messages = messages;
+  }
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
